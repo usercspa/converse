@@ -1,3 +1,3 @@
 # Converse
 
-[Web app] (https://converse.stackblitz.io/)
+[Web app](https://converse.stackblitz.io/)
