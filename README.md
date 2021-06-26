@@ -1,3 +1,3 @@
-# react-gcwd3t
+# Converse
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-gcwd3t)
+[Web app] (https://converse.stackblitz.io/)
