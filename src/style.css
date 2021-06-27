@@ -1,3 +1,17 @@
 h1, p {
   font-family: Lato;
 }
+
+body {
+  background-color: 1a1a1a;
+  color: #eeeeee;
+  text-align: center;
+  margin: 24px;
+  padding: 10px;
+}
+
+canvas {
+  border-radius: 24px;
+  border-color: #333;
+  border-width: 1px;
+}
