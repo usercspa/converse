@@ -24,8 +24,8 @@
       canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
       canvasCtx.drawImage(
           results.image, 0, 0, canvasElement.width, canvasElement.height);
-      if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
+      if (multiHandLandmarks) {
+        for (const landmarks of multiHandLandmarks) {
           drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS,
                          {color: '#00FF00', lineWidth: 5});
           drawLandmarks(canvasCtx, landmarks, {color: '#FF0000', lineWidth: 2});
@@ -33,7 +33,7 @@
       }
       canvasCtx.restore();
     }
-    
+
     const hands = new Hands({locateFile: (file) => {
       return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
     }});
@@ -43,6 +43,32 @@
       minTrackingConfidence: 0.5
     });
     hands.onResults(onResults);
+
+    
+
+// Draw the overlays.
+
+const image = document.createElement("img");
+canvasCtx.save();
+canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+canvasCtx.drawImage(image, 0, 0, canvasElement.width, canvasElement.height);
+if (multiHandLandmarks && multiHandedness) {
+    for (var index = 0; index <multiHandLandmarks.length; index++) {
+        var classification = multiHandedness[index];
+        var isRightHand = classification.label === 'Right';
+        var landmarks = multiHandLandmarks[index];
+        drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: isRightHand ? '#00FF00' : '#FF0000' }),
+            drawLandmarks(canvasCtx, landmarks, {
+                color: isRightHand ? '#00FF00' : '#FF0000',
+                fillColor: isRightHand ? '#FF0000' : '#00FF00',
+                radius: function (x) {
+                    return lerp(x.from.z, -0.15, .1, 10, 1);
+                }
+            });
+    }
+}
+canvasCtx.restore();
+
     
     const camera = new Camera(videoElement, {
       onFrame: async () => {
